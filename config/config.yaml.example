@@ -1,0 +1,15 @@
+# Зеркало ~/.hermes/config.yaml (без секретов — ключи в ~/.hermes/.env).
+# Источник истины — рантайм-файл на сервере; здесь — для воспроизводимости.
+
+model:
+  provider: openrouter
+  base_url: "https://openrouter.ai/api/v1"
+  # Бесплатная модель с tool-calling. Платные — только по отдельному разрешению.
+  default: "openai/gpt-oss-120b:free"
+
+# Bot API 10.1 Rich Messages — нативный рендер Markdown в Telegram.
+# Триггер расширен патчем адаптера (см. docs/telegram-rich-markdown.md).
+platforms:
+  telegram:
+    extra:
+      rich_messages: true

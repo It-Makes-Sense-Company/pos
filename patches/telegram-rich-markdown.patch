@@ -1,0 +1,26 @@
+diff --git a/plugins/platforms/telegram/adapter.py b/plugins/platforms/telegram/adapter.py
+index 8e062c5..57853cd 100644
+--- a/plugins/platforms/telegram/adapter.py
++++ b/plugins/platforms/telegram/adapter.py
+@@ -1111,6 +1111,21 @@ class TelegramAdapter(BasePlatformAdapter):
+             return True
+         if "$$" in content:
+             return True
++        # IMS patch: also route ordinary formatted output (headings, bold,
++        # lists, blockquotes, fenced code) through Rich Messages so agent
++        # replies render full Markdown instead of the degraded MarkdownV2 path.
++        # Aligns with Pocket Listings' "Rich Messages for all structured
++        # output" convention. Documented in pos repo docs/telegram-rich-markdown.md.
++        if re.search(r"(?m)^\s{0,3}#{1,6}\s+\S", content):          # ATX headings
++            return True
++        if re.search(r"\*\*.+?\*\*|__.+?__", content):               # bold
++            return True
++        if re.search(r"(?m)^\s{0,3}([-*+]|\d+[.)])\s+\S", content):  # bullet/ordered lists
++            return True
++        if re.search(r"(?m)^\s{0,3}>\s+\S", content):                # blockquote
++            return True
++        if re.search(r"(?m)^\s{0,3}```", content):                  # fenced code
++            return True
+         return False
+ 
+     def _rich_eligible(self, content: str) -> bool:
