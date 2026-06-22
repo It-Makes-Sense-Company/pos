@@ -1,0 +1,25 @@
+# Секреты — НИКОГДА не коммитим (репо публичный)
+.env
+*.env
+!.env.example
+*.key
+*credentials*
+
+# Hermes ставится локально, не вендорим в репо
+vendor/
+.hermes/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+
+# Runtime / состояние
+*.log
+*.sqlite
+*.db
+sessions/
